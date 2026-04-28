@@ -6,13 +6,13 @@ import { join } from "node:path";
 const root = new URL("..", import.meta.url).pathname;
 const read = (path) => readFileSync(join(root, path), "utf8");
 
-test("Qwen is the default in-browser model for first-run downloads", () => {
+test("Granite is the default in-browser model for first-run downloads", () => {
   const constants = read("src/shared/constants.ts");
   const settings = read("src/shared/llmSettings.ts");
 
-  assert.match(constants, /qwen3_1_7B:\s*{[\s\S]*modelId:\s*"onnx-community\/Qwen3-1\.7B-ONNX"/);
-  assert.match(constants, /export const TEXT_GENERATION_ID = "qwen3_1_7B";/);
-  assert.match(settings, /inBrowserModelId:\s*"qwen3_1_7B"/);
+  assert.match(constants, /granite3B:\s*{[\s\S]*modelId:\s*"onnx-community\/granite-4\.0-micro-ONNX-web"/);
+  assert.match(constants, /export const TEXT_GENERATION_ID = "granite3B";/);
+  assert.match(settings, /inBrowserModelId:\s*"granite3B"/);
 });
 
 test("extension package, manifest, and browser title are model-agnostic", () => {
