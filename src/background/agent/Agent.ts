@@ -12,7 +12,7 @@ import {
   ChatMessage,
   ChatMessageAssistant,
 } from "../../shared/types.ts";
-import { generateWithOpenAICompatibleApi } from "../llm/OpenAICompatibleProvider.ts";
+import { generateWithOpenAICompatibleApiStream } from "../llm/OpenAICompatibleProvider.ts";
 import { extractToolCalls } from "./extractToolCalls.ts";
 import { ToolCallPayload } from "./types.ts";
 import {
@@ -146,19 +146,26 @@ class Agent {
       let response = "";
       this.messages.push({ role: "assistant", content: "" });
 
-      const generation = await generateWithOpenAICompatibleApi({
+      const generation = await generateWithOpenAICompatibleApiStream({
         settings,
         messages: [...this.messages.slice(0, -1)],
         tools: this.tools,
+        onToken: (token) => {
+          if (firstTokenAt === null) firstTokenAt = performance.now();
+          response += token;
+          this.messages = this.messages.map((message, index, all) => ({
+            ...message,
+            content: index === all.length - 1 ? response : message.content,
+          }));
+          onResponseUpdate(sanitizeModelText(response));
+        },
       });
 
       response = sanitizeModelText(generation.text);
-      if (firstTokenAt === null) firstTokenAt = performance.now();
       this.messages = this.messages.map((message, index, all) => ({
         ...message,
         content: index === all.length - 1 ? response : message.content,
       }));
-      onResponseUpdate(response);
 
       const end = performance.now();
       const prefillMs = Math.max(0, (firstTokenAt ?? end) - start);
@@ -432,7 +439,7 @@ class Agent {
                 type: "function",
                 function: {
                   name: call.name,
-                  arguments: call.arguments,
+                  arguments: JSON.stringify(call.arguments),
                 },
               })),
             };
