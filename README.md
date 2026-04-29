@@ -1,10 +1,12 @@
-# Transformers.js Gemma 4 Browser Assistant
+# Local AI Browser Assistant
 
 ## About this extension
 
-An on-device AI assistant that runs entirely in your browser using WebGPU and Transformers.js. This Chrome extension provides an intelligent agent that can understand natural language commands and interact with your browser through a set of specialized tools.
+A privacy-first AI assistant for your browser. It can run AI models locally in-browser using Transformers.js and WebGPU, or connect to any OpenAI-compatible API (vLLM, Ollama, LM Studio, etc.) for more powerful models you control.
 
-All processing happens locally on your device. No data is sent to external servers, ensuring complete privacy.
+The extension provides an intelligent agent that understands natural language commands and can interact with your browser through specialized tools — all while keeping your data on your device or only sending it to servers you explicitly configure.
+
+Privacy policy: [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
 
 ### What can it do?
 
@@ -89,12 +91,20 @@ The extension requires these permissions:
 - `host_permissions`: Access webpage content on all URLs
 
 ---
-## Gemma 4
+## In-browser AI Models
 
-This extension uses the `onnx-community/gemma-4-E2B-it-ONNX` instruction-tuned model from Hugging Face:
+This extension supports loading ONNX models via Transformers.js for fully local inference. See the [Hugging Face Transformers.js models](https://huggingface.co/models?library=transformers.js) for compatible models.
 
-- Model card: https://huggingface.co/onnx-community/gemma-4-E2B-it-ONNX
-- Format: ONNX (optimized for browser inference with Transformers.js + WebGPU)
+## OpenAI-compatible API Support
+
+Connect to any OpenAI-compatible API backend for more powerful models:
+
+- **vLLM** — High-throughput serving for open-weight models
+- **Ollama** — Local model runner with a simple API
+- **LM Studio** — Local GPU-accelerated inference
+- **Custom endpoints** — Any server implementing the OpenAI chat completions API
+
+Configure your API URL and key in the extension settings. All requests go directly to your configured endpoint with no intermediary servers.
 
 ---
 ## Extension Architecture
