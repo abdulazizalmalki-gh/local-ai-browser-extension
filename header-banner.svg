@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="420" viewBox="0 0 1400 420">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6c63ff"/>
+      <stop offset="100%" style="stop-color:#48b8d1"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6c63ff" stop-opacity="0.3"/>
+      <stop offset="100%" style="stop-color:#48b8d1" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="420" fill="url(#bg)"/>
+  <circle cx="1100" cy="100" r="200" fill="url(#glow)"/>
+  <text x="100" y="160" font-family="system-ui, sans-serif" font-size="56" fill="#ffffff" font-weight="700">Local AI Browser Assistant</text>
+  <text x="100" y="210" font-family="system-ui, sans-serif" font-size="28" fill="#8888aa">Your AI. Your browser. Your data.</text>
+  <text x="100" y="270" font-family="system-ui, sans-serif" font-size="18" fill="#666688">Run AI models locally or connect to your own API</text>
+  <text x="100" y="300" font-family="system-ui, sans-serif" font-size="18" fill="#666688">No data leaves your device</text>
+</svg>
