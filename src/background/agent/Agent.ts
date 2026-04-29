@@ -38,6 +38,7 @@ const SYSTEM_PROMPT =
   "When asked what tools you have, list the declared tool names exactly. " +
   "If you decide to use a tool, briefly explain what you are doing before calling it.";
 const MAX_MESSAGES = 20; // Cap context to avoid unbounded memory growth
+const MAX_AGENT_ITERATIONS = 5; // Prevent infinite tool-call loops
 
 const truncateMessages = (messages: Array<Message>): Array<Message> => {
   if (messages.length <= MAX_MESSAGES) return messages;
@@ -359,6 +360,7 @@ class Agent {
 
     this.chatMessages = [...prevChatMessages, assistantMessage];
 
+    let iterationCount = 0;
     let messageInThisAgentRun = "";
     const updateAssistantMessage = (response: string) => {
       const { toolCalls, message } = extractToolCalls(response);
@@ -384,7 +386,8 @@ class Agent {
       this.chatMessages = [...prevChatMessages, assistantMessage];
     };
 
-    while (prompt !== null) {
+    while (prompt !== null && iterationCount < MAX_AGENT_ITERATIONS) {
+      iterationCount++;
       const generation = await this.generateText(
         prompt,
         roleForGeneration,
